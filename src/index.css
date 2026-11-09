@@ -1,0 +1,739 @@
+/* Must come before every other rule, or the build drops it and no web font loads. */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;700&family=Fira+Code:wght@400&family=Mountains+of+Christmas:wght@700&family=Great+Vibes&family=Cinzel:wght@600;700&family=Parisienne&family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700&family=Aref+Ruqaa:wght@400;700&display=swap');
+@import "tailwindcss";
+
+/*
+  NEW TAILWIND V4 THEME CONFIGURATION
+  Define your custom colors and fonts here.
+*/
+@theme {
+  /* Custom Nude Palette */
+  --color-nude-50: #fdfcf8;
+  --color-nude-100: #f7f3eb;
+  --color-nude-200: #ede3d0;
+  --color-nude-300: #d9cbb0;
+  --color-nude-400: #bfa38a;
+  --color-nude-500: #a6856e;
+  --color-nude-600: #8c6a56;
+  --color-nude-700: #705445;
+  --color-nude-800: #5b443a;
+  --color-nude-900: #4d3a33;
+
+  /* Custom Rustic Palette */
+  --color-rustic-green: #5c6b56;
+  --color-rustic-brown: #8c735a;
+  --color-rustic-gold: #c9a962;
+  --color-rustic-cream: #f5f1e8;
+
+  /* Custom Fonts */
+  /* Latin fonts first; they contain no Arabic letters, so Arabic text falls through to the font after them. */
+  --font-serif: "Playfair Display", "Amiri", serif;
+  --font-sans: "Lato", "Tajawal", sans-serif;
+  --font-mono: "Fira Code", monospace;
+
+  /* Custom Shadows */
+  --shadow-soft: 0 2px 15px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 4px 20px rgba(0, 0, 0, 0.08);
+  --shadow-large: 0 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Global Base Styles */
+html {
+  @apply antialiased;
+}
+
+body {
+  @apply bg-nude-50 text-gray-800 font-sans;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-serif;
+}
+
+/* Custom Components */
+@layer components {
+.btn-primary {
+  @apply bg-rustic-green text-white px-6 py-3 rounded-lg
+         hover:bg-rustic-green/90 transition duration-300
+         font-medium shadow-soft;
+}
+  .btn-secondary {
+    @apply bg-nude-200 text-rustic-brown px-6 py-3 rounded-lg
+           hover:bg-nude-300 transition duration-300
+           font-medium border border-nude-300;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-soft border border-nude-200
+           p-6 transition duration-300 hover:shadow-medium;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-2 border border-nude-300 rounded-lg
+           bg-white focus:outline-none focus:ring-2 focus:ring-rustic-green
+           focus:border-transparent transition duration-200;
+  }
+
+  .tag {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium
+           bg-rustic-green/10 text-rustic-green border border-rustic-green/20;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--color-nude-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-nude-400);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-nude-500);
+}
+
+/*
+  GALLERY THEMES
+  Set by App.tsx as data-theme on <html>. Default has no rules here, so it looks exactly as above.
+
+  Each theme sets three groups of variables:
+  - the palette: Tailwind v4 utilities read the @theme variables at runtime (bg-rustic-green is
+    var(--color-rustic-green)), so redefining them re-colours every component.
+    nude-* = neutrals, rustic-green = primary (buttons, footer), rustic-brown = headings, rustic-gold = accent.
+  - the stage: the hero and the gallery header band (--stage-*), the only places with strong colour and particles.
+  - small accents: announcement bar (--bar-*) and card frame (--card-*).
+  The shared rules below read those variables through the theme-* hook classes on the components.
+  These rules are unlayered, so they beat the Tailwind utilities on the same elements.
+*/
+
+:root[data-theme="christmas"] {
+  --color-nude-50: #fdfaf5;
+  --color-nude-100: #f8f1e7;
+  --color-nude-200: #efe2d0;
+  --color-nude-300: #e0cbb0;
+  --color-nude-400: #c5a684;
+  --color-nude-500: #a58463;
+  --color-nude-600: #86684c;
+  --color-nude-700: #6b513c;
+  --color-nude-800: #55412f;
+  --color-nude-900: #443427;
+  --color-rustic-green: #1e5631;
+  --color-rustic-brown: #a4161a;
+  --color-rustic-gold: #c9a227;
+  --color-rustic-cream: #f8f1e7;
+
+  --font-display: "Mountains of Christmas", "Aref Ruqaa", "Playfair Display", serif;
+  --display-weight: 700;
+  --display-size: clamp(3.25rem, 8vw, 5.75rem);
+  --stage-bg: radial-gradient(ellipse at 50% 0%, #c81d25 0%, #a4161a 45%, #7a0f12 100%);
+  --stage-title: #ffffff;
+  --title-shine: #ffd966;
+  --title-glow: rgba(255, 215, 0, 0.45);
+  --stage-eyebrow: #f1d47a;
+  --stage-text: #fbe3e3;
+  --page-bg:
+    radial-gradient(circle, rgba(142, 197, 255, 0.4) 2px, transparent 2.5px) 0 0 / 28px 28px,
+    radial-gradient(circle, rgba(164, 22, 26, 0.12) 1.5px, transparent 2px) 14px 14px / 28px 28px,
+    #fdfaf5;
+  --bar-bg: #1e5631;
+  --bar-text: #ffffff;
+  --card-frame: 0 0 0 1px #c9a227, 0 0 0 6px #ffffff, 0 0 0 7px rgba(164, 22, 26, 0.35);
+  --card-shadow: rgba(122, 15, 18, 0.35);
+}
+
+:root[data-theme="valentine"] {
+  --color-nude-50: #fff8fa;
+  --color-nude-100: #fff0f5;
+  --color-nude-200: #fde0ea;
+  --color-nude-300: #f9c6d8;
+  --color-nude-400: #f0a0bc;
+  --color-nude-500: #e07a9e;
+  --color-nude-600: #c45a80;
+  --color-nude-700: #a04566;
+  --color-nude-800: #7e3651;
+  --color-nude-900: #632b40;
+  --color-rustic-green: #d6336c;
+  --color-rustic-brown: #a61e4d;
+  --color-rustic-gold: #f783ac;
+  --color-rustic-cream: #fff0f5;
+
+  --font-display: "Great Vibes", "Aref Ruqaa", cursive;
+  --display-size: clamp(3.75rem, 9vw, 6.5rem);
+  --stage-bg: linear-gradient(180deg, #fff2f7 0%, #ffe3ee 55%, #ffd1e3 100%);
+  --stage-title: #a61e4d;
+  --title-shine: #ff8fb8;
+  --title-glow: rgba(255, 105, 160, 0.45);
+  --stage-eyebrow: #d6336c;
+  --stage-text: #9c3d63;
+  --page-bg:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cpath d='M28 44s-14-8.8-14-18.7a7.6 7.6 0 0 1 14-4.1 7.6 7.6 0 0 1 14 4.1C42 35.2 28 44 28 44z' fill='%23d6336c' fill-opacity='0.08'/%3E%3C/svg%3E") 0 0 / 56px 56px,
+    #fff8fa;
+  --bar-bg: #d6336c;
+  --bar-text: #ffffff;
+  --card-frame: 0 0 0 1px #fcc2d7, 0 0 0 6px #ffffff, 0 0 0 7px #fcc2d7;
+  --card-shadow: rgba(214, 51, 108, 0.35);
+}
+
+:root[data-theme="graduation"] {
+  --color-nude-50: #f8f9fc;
+  --color-nude-100: #f0f3f8;
+  --color-nude-200: #e0e6f0;
+  --color-nude-300: #c6d0e0;
+  --color-nude-400: #98a6bf;
+  --color-nude-500: #71819e;
+  --color-nude-600: #566581;
+  --color-nude-700: #44516a;
+  --color-nude-800: #343e53;
+  --color-nude-900: #272f40;
+  --color-rustic-green: #0b1f4b;
+  --color-rustic-brown: #0b1f4b;
+  --color-rustic-gold: #c9a227;
+  --color-rustic-cream: #f0f3f8;
+
+  --font-display: "Cinzel", "Amiri", serif;
+  --display-size: clamp(2.75rem, 6vw, 4.75rem);
+  --stage-bg: radial-gradient(ellipse at 50% 0%, #1d3b7a 0%, #0f2856 50%, #0b1f4b 100%);
+  --stage-title: #e9cf6b;
+  --title-shine: #fff7d6;
+  --title-glow: rgba(233, 207, 107, 0.5);
+  --stage-eyebrow: #ffffff;
+  --stage-text: #d5def0;
+  --page-bg:
+    radial-gradient(circle, rgba(201, 162, 39, 0.45) 1.8px, transparent 2.3px) 0 0 / 24px 24px,
+    radial-gradient(circle, rgba(11, 31, 75, 0.14) 1.2px, transparent 1.7px) 12px 12px / 24px 24px,
+    #f8f9fc;
+  --bar-bg: #c9a227;
+  --bar-text: #0b1f4b;
+  --card-frame: 0 0 0 2px #c9a227, 0 0 0 7px #ffffff, 0 0 0 8px #0b1f4b;
+  --card-shadow: rgba(11, 31, 75, 0.4);
+}
+
+:root[data-theme="wedding"] {
+  --color-nude-50: #fffdf9;
+  --color-nude-100: #fbf7f0;
+  --color-nude-200: #f2e9db;
+  --color-nude-300: #e6d7bf;
+  --color-nude-400: #cfb791;
+  --color-nude-500: #b39a72;
+  --color-nude-600: #957d58;
+  --color-nude-700: #776346;
+  --color-nude-800: #5f4f38;
+  --color-nude-900: #4a3b2a;
+  --color-rustic-green: #4a3b2a;
+  --color-rustic-brown: #5a4a3a;
+  --color-rustic-gold: #c5a572;
+  --color-rustic-cream: #fbf7f0;
+
+  --font-display: "Parisienne", "Aref Ruqaa", cursive;
+  --display-size: clamp(3.5rem, 8.5vw, 6.25rem);
+  /* Mother-of-pearl: blush, lavender, mint and champagne washes over ivory */
+  --pearl-wash: linear-gradient(115deg, #fbeef1 0%, #efeaf8 28%, #e7f4ef 52%, #f8efdf 76%, #fbeef1 100%);
+  /* A pearl bead: an off-centre highlight layer over a lilac-edged sphere */
+  /* Each layer carries its own size: a size written after var() would only reach the last layer. */
+  --pearl-bead:
+    radial-gradient(circle at 46% 44%, rgba(255, 255, 255, 0.95) 0 1px, transparent 1.7px) 0 0 / 46px 46px,
+    radial-gradient(circle at 50% 50%, #fbf6f9 0 2.4px, rgba(214, 199, 224, 0.85) 3.4px, transparent 4.3px) 0 0 / 46px 46px;
+  --stage-bg:
+    radial-gradient(ellipse at 18% 8%, #fde6ee 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 25%, #e8e3f9 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 105%, #def2ea 0%, transparent 60%),
+    linear-gradient(180deg, #fffdf9 0%, #f8f1e7 100%);
+  --stage-title: #4a3b2a;
+  --title-shine: #b7a1d8;
+  --title-glow: rgba(255, 255, 255, 0.95);
+  --stage-eyebrow: #9a7f5a;
+  --stage-text: #6b5b45;
+  --page-bg:
+    var(--pearl-bead),
+    linear-gradient(115deg, rgba(251, 238, 241, 0.7), rgba(239, 234, 248, 0.7), rgba(231, 244, 239, 0.7), rgba(248, 239, 223, 0.7)) fixed,
+    #fffdf9;
+  --bar-bg: linear-gradient(90deg, #f6ecdf, #f6e4ec, #e9e6f7, #e2f2ec, #f6ecdf) 0 0 / 300% 100%;
+  --bar-text: #5a4a3a;
+  --card-frame: 0 0 0 1px #e6dccd, 0 0 0 6px #fffdf9, 0 0 0 7px #e4dcef, 0 0 0 8px #f1e6ea;
+  --card-shadow: rgba(74, 59, 42, 0.3);
+}
+
+/* ---------- Shared rules for every non-default theme ---------- */
+
+:root:is([data-theme="christmas"], [data-theme="valentine"], [data-theme="graduation"], [data-theme="wedding"]) {
+  /* Patterned page background, behind every section that has no background of its own */
+  & body {
+    background: var(--page-bg);
+  }
+
+  /* Navbar stays light: just a primary hairline and an accent on the logo */
+  & .theme-nav {
+    border-bottom: 2px solid var(--color-rustic-green);
+  }
+  & .theme-nav svg { color: var(--color-rustic-gold); }
+
+  /* The stage: hero and gallery header band */
+  & .theme-stage {
+    background: var(--stage-bg);
+    border-bottom: 0;
+  }
+  & .theme-hero-photo,
+  & .theme-hero-overlay {
+    display: none;
+  }
+
+  & .theme-eyebrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    color: var(--stage-eyebrow);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+  & .theme-eyebrow::before,
+  & .theme-eyebrow::after {
+    content: "";
+    width: 2.75rem;
+    height: 1px;
+    margin: 0 1rem;
+    background: currentColor;
+    opacity: 0.7;
+  }
+
+  & .theme-title {
+    font-family: var(--font-display);
+    font-size: var(--display-size);
+    font-weight: var(--display-weight, 600);
+    line-height: 1.1;
+  }
+
+  /* Stage titles: a foil sheen sweeps across every few seconds, with a soft glow.
+     The glow is a filter, not text-shadow: a text-shadow would show through the transparent fill. */
+  & .theme-title,
+  & .theme-stage .theme-heading {
+    background: linear-gradient(110deg, var(--stage-title) 42%, var(--title-shine) 50%, var(--stage-title) 58%) 0 0 / 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: none;
+    filter: drop-shadow(0 0 18px var(--title-glow)) drop-shadow(0 2px 3px rgba(0, 0, 0, 0.15));
+    animation: theme-title-sheen 6s ease-in-out infinite;
+  }
+
+  & .theme-tagline {
+    color: var(--stage-text);
+    font-size: 1.15rem;
+    font-weight: 400;
+  }
+
+  & .theme-stage .theme-heading {
+    font-family: var(--font-display);
+    font-size: calc(var(--display-size) * 0.72);
+    color: var(--stage-title);
+  }
+
+  /* Section headings use the theme's display font too */
+  & .theme-heading {
+    font-family: var(--font-display);
+    font-weight: var(--display-weight, 600);
+    font-size: clamp(2.25rem, 4.5vw, 3rem);
+  }
+
+  /* Gold divider with a small ornament under section headings */
+  & .theme-heading::after {
+    content: "✦";
+    display: block;
+    width: 9rem;
+    margin: 0.6rem auto 0;
+    color: var(--color-rustic-gold);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    line-height: 1;
+    background:
+      linear-gradient(currentColor, currentColor) left center / 40% 1px no-repeat,
+      linear-gradient(currentColor, currentColor) right center / 40% 1px no-repeat;
+  }
+
+  /* Pill button with a soft coloured shadow */
+  & .theme-button {
+    border-radius: 9999px;
+    padding: 0.9rem 2.5rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    box-shadow: 0 12px 26px -10px var(--card-shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  & .theme-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 30px -10px var(--card-shadow);
+  }
+
+  /* Gallery cards: a thin double frame and a soft shadow */
+  & .theme-card {
+    border-radius: 1rem;
+    box-shadow: var(--card-frame), 0 22px 36px -22px var(--card-shadow);
+  }
+  & .theme-card:hover {
+    box-shadow: var(--card-frame), 0 30px 44px -22px var(--card-shadow);
+  }
+
+  & .theme-footer {
+    border-top: 3px solid var(--color-rustic-gold);
+  }
+}
+
+/*
+  Announcement bar and the custom hero message. These show in every theme, Default included
+  (Default only shows them when a custom message is set), so they are styled outside the theme blocks
+  and fall back to the default palette when no theme sets --bar-bg / --bar-text.
+  A light sheen sweeps across the bar, and glints frame the text.
+*/
+.theme-banner {
+  position: relative;
+  overflow: hidden;
+  padding: 0.55rem 1rem;
+  background: var(--bar-bg, var(--color-rustic-green));
+  color: var(--bar-text, #ffffff);
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.theme-hero-note {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 1.75rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 9999px;
+  background: var(--bar-bg, var(--color-rustic-green));
+  color: var(--bar-text, #ffffff);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.35), 0 12px 28px -10px rgba(0, 0, 0, 0.45);
+  animation: theme-note-pulse 3s ease-in-out infinite;
+}
+
+@keyframes theme-note-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.04); }
+}
+
+.theme-banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.45) 50%, transparent 60%) -100% 0 / 200% 100% no-repeat;
+  animation: theme-banner-sheen 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.theme-banner-glint {
+  display: inline-block;
+  margin: 0 0.9em;
+  color: var(--color-rustic-gold);
+  animation: theme-twinkle-soft 2.2s ease-in-out infinite;
+}
+
+.theme-banner-glint:last-child { animation-delay: 1.1s; }
+
+:root[data-theme="graduation"] .theme-banner-glint,
+:root[data-theme="wedding"] .theme-banner-glint {
+  color: #ffffff;
+}
+
+@keyframes theme-title-sheen {
+  0%, 15% { background-position: 100% 0; }
+  65%, 100% { background-position: -50% 0; }
+}
+
+@keyframes theme-banner-sheen {
+  0%, 20% { background-position: -100% 0; }
+  70%, 100% { background-position: 200% 0; }
+}
+
+@keyframes theme-twinkle-soft {
+  0%, 100% { opacity: 0.45; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.25); }
+}
+
+/* Wedding is pearlescent: shifting iridescent surfaces instead of solid colour */
+:root[data-theme="wedding"] {
+  & .theme-banner {
+    border-bottom: 1px solid #e6dccd;
+    animation: theme-pearl-shift 16s linear infinite;
+  }
+
+  & .theme-nav {
+    border-bottom: 2px solid #e6dccd;
+    box-shadow: 0 2px 0 #ece4f3;
+  }
+
+  /* A soft band of light sweeping slowly across the stage */
+  & .theme-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.75) 45%, rgba(236, 226, 248, 0.5) 50%, transparent 65%) -100% 0 / 200% 100% no-repeat,
+      var(--pearl-bead);
+    animation: theme-pearl-sheen 9s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  & .theme-button {
+    background: var(--pearl-wash) 0 0 / 250% 100%;
+    color: #4a3b2a;
+    border: 1px solid #e0d4c4;
+    box-shadow: inset 0 1px 0 #ffffff, 0 12px 26px -12px rgba(120, 100, 140, 0.45);
+    animation: theme-pearl-shift 10s linear infinite;
+  }
+
+  & .theme-heading::after {
+    color: #c9b3d6;
+  }
+
+  & .theme-footer {
+    border-top: 4px solid transparent;
+    border-image: var(--pearl-wash) 4;
+  }
+}
+
+.theme-pearl {
+  border-radius: 9999px;
+  background: radial-gradient(circle at 35% 30%, #ffffff 0 12%, #f6eef4 30%, #e3d8ea 62%, #cbbfd8 100%);
+  box-shadow: 0 2px 4px rgba(120, 100, 140, 0.25), inset -1px -2px 3px rgba(160, 140, 180, 0.35);
+}
+
+@keyframes theme-pearl-shift {
+  to { background-position: -300% 0; }
+}
+
+@keyframes theme-pearl-sheen {
+  0% { background-position: -100% 0, 0 0, 0 0; }
+  60%, 100% { background-position: 200% 0, 0 0, 0 0; }
+}
+
+/* ---------- News strip (the custom banner message), under the hero or the gallery header band ---------- */
+
+.theme-ticker {
+  position: relative;
+  overflow: hidden;
+  background: var(--bar-bg, var(--color-rustic-green));
+  color: var(--bar-text, #ffffff);
+  border-bottom: 2px solid var(--color-rustic-gold);
+  box-shadow: 0 8px 18px -12px rgba(0, 0, 0, 0.4);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+}
+
+.theme-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: theme-ticker linear infinite;
+}
+
+.theme-ticker:hover .theme-ticker-track {
+  animation-play-state: paused;
+}
+
+.theme-ticker-half {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.theme-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 0;
+  white-space: nowrap;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.theme-ticker-glint {
+  margin: 0 2.5rem;
+  color: var(--ticker-glint, var(--color-rustic-gold));
+}
+
+:root[data-theme="graduation"] { --ticker-glint: #0b1f4b; }
+:root[data-theme="wedding"] { --ticker-glint: #b7a1d8; }
+
+@keyframes theme-ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/*
+  ---------- Arabic ----------
+  The language switcher sets lang="ar" and dir="rtl" on <html>; flex rows, text alignment and
+  the navbar order flip by themselves. What's left is typography and the ticker's direction.
+*/
+
+/* Letter spacing pulls Arabic letters apart and breaks the joins between them. */
+:root[lang="ar"] :is(.theme-banner, .theme-eyebrow, .theme-ticker-item, .theme-button, .theme-hero-note) {
+  letter-spacing: 0;
+}
+
+/* The small uppercase labels are sized for Latin capitals; Arabic needs a little more size to read. */
+:root[lang="ar"] :is(.theme-banner, .theme-eyebrow, .theme-hero-note) {
+  font-size: 0.95rem;
+}
+
+:root[lang="ar"] :is(.theme-ticker-item, .theme-button) {
+  font-size: 1rem;
+}
+
+/* Amiri draws smaller than Playfair at the same size, so the Arabic brand name gets a step up. */
+:root[lang="ar"] .theme-brand {
+  font-size: 1.85rem;
+}
+
+/* Arabic display fonts sit taller; extra line height keeps their dots and tails from being clipped. */
+:root[lang="ar"] :is(.theme-title, .theme-heading) {
+  line-height: 1.5;
+}
+
+/* Arabic tickers run left to right, so new words appear on the side the reader starts from. */
+:root[dir="rtl"] .theme-ticker-track {
+  animation-name: theme-ticker-rtl;
+}
+
+@keyframes theme-ticker-rtl {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+
+/* ---------- Particles and ornaments (inside the stage only) ---------- */
+
+.theme-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+  /* Lets the keyframes move particles by the stage's own height (cqh) instead of the viewport's. */
+  container-type: size;
+}
+
+.theme-particle {
+  position: absolute;
+  top: 0;
+  line-height: 1;
+  user-select: none;
+  will-change: transform;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.theme-particle--fall { animation-name: theme-fall; }
+.theme-particle--rise { animation-name: theme-rise; }
+.theme-particle--tumble { animation-name: theme-tumble; }
+
+.theme-snow {
+  color: #ffffff;
+  opacity: 0.85;
+  text-shadow: 0 0 4px rgba(255, 255, 255, 0.6);
+}
+
+.theme-heart {
+  opacity: 0.8;
+  filter: drop-shadow(0 4px 6px rgba(166, 30, 77, 0.2));
+}
+
+.theme-confetti {
+  width: 7px;
+  height: 12px;
+  border-radius: 1.5px;
+  opacity: 0.9;
+}
+
+.theme-petal {
+  border-radius: 70% 0 70% 0;
+  opacity: 0.85;
+  box-shadow: inset -2px -2px 4px rgba(160, 110, 100, 0.25);
+}
+
+.theme-glint {
+  position: absolute;
+  line-height: 1;
+  color: var(--color-rustic-gold);
+  text-shadow: 0 0 6px var(--color-rustic-gold);
+  animation: theme-twinkle ease-in-out infinite;
+}
+
+.theme-ornaments {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.theme-ornament {
+  position: absolute;
+  line-height: 1;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.25));
+  animation: theme-float 7s ease-in-out infinite;
+}
+
+:root[data-theme="graduation"] .theme-ornament {
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.35)) drop-shadow(0 10px 14px rgba(0, 0, 0, 0.35));
+}
+
+@media (max-width: 767px) {
+  .theme-ornament { font-size: 2.25rem !important; opacity: 0.8; }
+}
+
+@keyframes theme-fall {
+  from { transform: translate3d(0, -12cqh, 0) rotate(0deg); }
+  to { transform: translate3d(var(--drift), 112cqh, 0) rotate(var(--spin)); }
+}
+
+@keyframes theme-rise {
+  0% { transform: translate3d(0, 112cqh, 0) scale(0.85); opacity: 0; }
+  15% { opacity: 0.8; }
+  50% { transform: translate3d(calc(var(--drift) * -0.5), 50cqh, 0) scale(1); }
+  85% { opacity: 0.7; }
+  100% { transform: translate3d(var(--drift), -12cqh, 0) scale(0.85); opacity: 0; }
+}
+
+@keyframes theme-tumble {
+  from { transform: translate3d(0, -12cqh, 0) rotateX(0deg) rotateZ(0deg); }
+  to { transform: translate3d(var(--drift), 112cqh, 0) rotateX(540deg) rotateZ(var(--spin)); }
+}
+
+@keyframes theme-twinkle {
+  0%, 100% { transform: scale(0.2); opacity: 0; }
+  50% { transform: scale(1); opacity: 0.9; }
+}
+
+@keyframes theme-float {
+  0%, 100% { transform: translateY(0) rotate(var(--tilt)); }
+  50% { transform: translateY(-10px) rotate(calc(var(--tilt) + 4deg)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-particles { display: none; }
+  .theme-ornament,
+  .theme-banner,
+  .theme-banner::after,
+  .theme-banner-glint,
+  .theme-hero-note,
+  .theme-ticker-track,
+  .theme-button,
+  .theme-title,
+  .theme-stage .theme-heading,
+  .theme-stage::before { animation: none !important; }
+}
